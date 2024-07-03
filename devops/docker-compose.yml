@@ -12,13 +12,14 @@ services:
   backend:
     build:
       context: ../backend
-    working_dir: /app/backend
     environment:
-      - PYTHONPATH=/app
+      - MONGO_DETAILS=mongodb://mongo:27017  # Указываем на сервис MongoDB
     ports:
       - "8099:8000"
     volumes:
-      - ../.:/app
+      - ../backend:/app
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest

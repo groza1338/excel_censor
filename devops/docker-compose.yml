@@ -17,7 +17,7 @@ services:
     ports:
       - "8099:8000"
     volumes:
-      - ../backend:/app
+      - ../backend:/app/backend
     depends_on:
       - mongo
 

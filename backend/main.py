@@ -96,6 +96,7 @@ async def mask_columns_api(file_id: str = Form(...), columns_to_mask: str = Form
 
         file_location = Path(file_info["path"])
         original_filename = file_info["filename"]
+        censored_filename = original_filename.replace(".xlsx", "_censored.xlsx")
 
         df = read_excel_values(file_location)
 
@@ -105,17 +106,17 @@ async def mask_columns_api(file_id: str = Form(...), columns_to_mask: str = Form
 
         censored_unique_id = str(uuid.uuid4())
         censored_dir = Path("uploaded_files")
-        censored_file_path = save_censored_file(masked_df, censored_dir / f"{censored_unique_id}_{original_filename}")
+        censored_file_path = save_censored_file(masked_df, censored_dir / f"{censored_unique_id}_{censored_filename}")
 
         censored_file_info = {
             "censored_file_id": censored_unique_id,
-            "filename": original_filename,
+            "filename": censored_filename,
             "path": str(censored_file_path),
             "created_at": datetime.utcnow()
         }
         await censored_files_collection.insert_one(censored_file_info)
 
-        return {"censored_file_id": censored_unique_id, "censored_filename": original_filename}
+        return {"censored_file_id": censored_unique_id, "censored_filename": censored_filename}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -129,7 +130,7 @@ async def download_file(censored_file_id: str):
 
         censored_file_path = Path(file_info["path"])
         original_filename = file_info["filename"]
-        censored_filename = f"{Path(original_filename).stem}_censored{Path(original_filename).suffix}"
+        censored_filename = f"{Path(original_filename).stem}{Path(original_filename).suffix}"
 
         if not censored_file_path.exists():
             raise HTTPException(status_code=404, detail="File not found")

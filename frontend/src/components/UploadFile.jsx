@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import axios from 'axios';
 
 const URL_API = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
 
-const UploadFile = () => {
-  const [fileInfo, setFileInfo] = useState(null);
+const UploadFile = ({ setColumns, setFileId, onFileUpload }) => {
   const [fileList, setFileList] = useState([]);
 
   const props = {
@@ -23,9 +21,10 @@ const UploadFile = () => {
     onChange: (info) => {
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
-        setFileInfo(info.file.response);
-        // Очистка списка файлов, оставляем только последний загруженный файл
         setFileList([info.file]);
+        setColumns(info.file.response.columns);
+        setFileId(info.file.response.file_id);
+        onFileUpload(); // сброс состояния
       } else if (info.file.status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       } else {
@@ -33,8 +32,10 @@ const UploadFile = () => {
       }
     },
     onRemove: () => {
-      setFileInfo(null);
       setFileList([]);
+      setColumns([]);
+      setFileId(null);
+      onFileUpload(); // сброс состояния
     },
     fileList,
   };
@@ -44,14 +45,6 @@ const UploadFile = () => {
       <Upload {...props}>
         <Button icon={<UploadOutlined />}>Click to Upload</Button>
       </Upload>
-      {fileInfo && (
-        <div>
-          <h3>File Uploaded:</h3>
-          <p>File ID: {fileInfo.file_id}</p>
-          <p>Filename: {fileInfo.filename}</p>
-          <p>Columns: {fileInfo.columns.join(', ')}</p>
-        </div>
-      )}
     </div>
   );
 };

@@ -14,19 +14,19 @@ const UploadFile = ({ setColumns, setFileId, onFileUpload }) => {
     beforeUpload: (file) => {
       const isXLSX = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
       if (!isXLSX) {
-        message.error('You can only upload XLSX file!');
+        message.error('Вы можете загрузить только .xlsx файл!');
       }
       return isXLSX || Upload.LIST_IGNORE;
     },
     onChange: (info) => {
       if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
+        message.success(`${info.file.name} файл успешно загружен!`);
         setFileList([info.file]);
         setColumns(info.file.response.columns);
         setFileId(info.file.response.file_id);
         onFileUpload(); // сброс состояния
       } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
+        message.error(`${info.file.name} ошибка при загрузке файла.`);
       } else {
         setFileList(info.fileList);
       }
@@ -43,7 +43,7 @@ const UploadFile = ({ setColumns, setFileId, onFileUpload }) => {
   return (
     <div>
       <Upload {...props}>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        <Button icon={<UploadOutlined />}>Загрузить файл</Button>
       </Upload>
     </div>
   );

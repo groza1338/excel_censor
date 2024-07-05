@@ -7,7 +7,7 @@ const URL_API = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
 const CensorButton = ({ fileId, selectedColumns, onSuccess }) => {
   const handleCensor = async () => {
     if (!fileId) {
-      message.error('No file uploaded');
+      message.error('Вы не загрузили файл!');
       return;
     }
 
@@ -21,18 +21,18 @@ const CensorButton = ({ fileId, selectedColumns, onSuccess }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      message.success('File censored successfully');
+      message.success('Данные спрятаны');
       if (onSuccess) {
         onSuccess(response.data);
       }
     } catch (error) {
-      message.error('Censoring failed');
+      message.error('Ошибка при цензурировании');
     }
   };
 
   return (
     <Button type="primary" onClick={handleCensor}>
-      Censor Selected Columns
+      Спрятать выбранные колонки
     </Button>
   );
 };

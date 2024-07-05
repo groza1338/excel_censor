@@ -7,7 +7,7 @@ const URL_API = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
 const DownloadFileButton = ({ censoredFileId, censoredFilename }) => {
   const handleDownload = async () => {
     if (!censoredFileId) {
-      message.error('No censored file available for download');
+      message.error('Нет файлов, для цензурирования');
       return;
     }
 
@@ -27,15 +27,15 @@ const DownloadFileButton = ({ censoredFileId, censoredFilename }) => {
       link.click();
       document.body.removeChild(link);
 
-      message.success('File downloaded successfully');
+      message.success('Файл успешно скачан!');
     } catch (error) {
-      message.error('File download failed');
+      message.error('Ошибка при скачивании файла');
     }
   };
 
   return (
     <Button type="primary" onClick={handleDownload}>
-      Download Censored File
+      Скачать зацензуренный файл
     </Button>
   );
 };

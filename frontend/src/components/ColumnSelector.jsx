@@ -8,7 +8,7 @@ const ColumnSelector = ({ columns, selectedColumns, setSelectedColumns }) => {
 
   return (
     <div>
-      <h3>Select Columns to Censor</h3>
+      <h3>Выберете колонки, которые хотите спрятать</h3>
       <Checkbox.Group onChange={onChange} value={selectedColumns}>
         <List
           dataSource={columns}

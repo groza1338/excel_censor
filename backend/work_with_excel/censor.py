@@ -1,6 +1,25 @@
 from pathlib import Path
 from typing import Optional, List
 import pandas as pd
+from openpyxl import load_workbook
+
+
+def find_first_data_row(file_path: Path) -> int:
+    """
+    Функция для определения первой строки с данными в Excel файле.
+
+    Args:
+        file_path (Path): Путь к Excel файлу.
+
+    Returns:
+        int: Индекс первой строки с данными.
+    """
+    wb = load_workbook(file_path, data_only=True)
+    ws = wb.active
+    for i, row in enumerate(ws.iter_rows(values_only=True)):
+        if any(row) and not all(cell is None for cell in row):
+            return i
+    return 0
 
 
 def read_excel_values(file_path: Path) -> pd.DataFrame:
@@ -13,7 +32,10 @@ def read_excel_values(file_path: Path) -> pd.DataFrame:
     Returns:
         pd.DataFrame: DataFrame со всеми значениями из Excel файла.
     """
-    df = pd.read_excel(file_path)
+    start_row = find_first_data_row(file_path)
+    df = pd.read_excel(file_path, skiprows=start_row)
+    # Удаление колонок с именем "Unnamed"
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     return df
 
 

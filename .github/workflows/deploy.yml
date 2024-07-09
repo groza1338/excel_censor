@@ -67,5 +67,6 @@ jobs:
           script: |
             cd excel_censor
             docker-compose down
+            docker image prune -a -f && docker volume prune -f
             docker-compose pull
             docker-compose up -d --force-recreate

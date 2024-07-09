@@ -34,8 +34,9 @@ def read_excel_values(file_path: Path) -> pd.DataFrame:
     """
     start_row = find_first_data_row(file_path)
     df = pd.read_excel(file_path, skiprows=start_row)
-    # Удаление колонок с именем "Unnamed"
-    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+    if not df.empty:
+        # Удаление колонок с именем "Unnamed"
+        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     return df
 
 

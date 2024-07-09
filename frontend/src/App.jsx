@@ -43,6 +43,11 @@ function App() {
                   />
               </>
           )}
+          {columns.length === 0 && fileId && (
+              <>
+                <h2>Файл пустой!</h2>
+              </>
+          )}
           {censoredFileId && (
               <DownloadFileButton
                   censoredFileId={censoredFileId}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import UploadFile from "./components/UploadFile.jsx";
 import ColumnSelector from "./components/ColumnSelector.jsx";
@@ -13,16 +13,19 @@ function App() {
   const [fileId, setFileId] = useState(null);
   const [censoredFileId, setCensoredFileId] = useState(null);
   const [censoredFilename, setCensoredFilename] = useState('');
+  const [hasError, setHasError] = useState(false);
 
   const handleCensorSuccess = (data) => {
     setCensoredFileId(data.censored_file_id);
     setCensoredFilename(data.censored_filename);
+    setHasError(false);
   };
 
   const handleFileUpload = () => {
     setSelectedColumns([]);
     setCensoredFileId(null);
     setCensoredFilename('');
+    setHasError(false);
   };
 
   return (
@@ -41,6 +44,7 @@ function App() {
               fileId={fileId}
               selectedColumns={selectedColumns}
               onSuccess={handleCensorSuccess}
+              setHasError={setHasError}
             />
           </div>
         </>
@@ -48,7 +52,7 @@ function App() {
       {columns.length === 0 && fileId && (
         <h2>Файл пустой!</h2>
       )}
-      {censoredFileId && (
+      {censoredFileId && !hasError && (
         <div className="button-container">
           <DownloadFileButton
             censoredFileId={censoredFileId}

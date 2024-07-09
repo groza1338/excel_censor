@@ -1,0 +1,15 @@
+.scroll-area {
+  max-height: 300px; /* Высота прокручиваемой области */
+  overflow-y: auto; /* Вертикальная прокрутка */
+  padding: 10px; /* Внутренние отступы */
+  margin-bottom: 10px;
+}
+
+.scroll-area.has-scroll {
+  border: 1px solid #ddd; /* Рамка для прокручиваемой области, если есть скроллинг */
+}
+
+.column-selector-item {
+  margin-bottom: 10px; /* Отступ между элементами */
+  text-align: left; /* Выравнивание текста по левому краю */
+}

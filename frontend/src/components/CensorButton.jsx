@@ -11,6 +11,11 @@ const CensorButton = ({ fileId, selectedColumns, onSuccess }) => {
       return;
     }
 
+    if (selectedColumns.length === 0) {
+      message.error('Вы не выбрали колонки для цензуры!');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file_id', fileId);
     formData.append('columns_to_mask', selectedColumns.join(','));

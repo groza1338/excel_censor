@@ -2,7 +2,6 @@
   max-height: 300px; /* Высота прокручиваемой области */
   overflow-y: auto; /* Вертикальная прокрутка */
   padding: 10px; /* Внутренние отступы */
-  margin-bottom: 10px;
 }
 
 .scroll-area.has-scroll {

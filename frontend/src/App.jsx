@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
 import UploadFile from "./components/UploadFile.jsx";
 import ColumnSelector from "./components/ColumnSelector.jsx";
 import CensorButton from "./components/CensorButton.jsx";
 import DownloadFileButton from "./components/DownloadFileButton.jsx";
-const URL_API = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
 
+const URL_API = import.meta.env.DEV ? 'http://localhost:8000/api' : '/api';
 
 function App() {
   const [columns, setColumns] = useState([]);
@@ -26,36 +26,38 @@ function App() {
   };
 
   return (
-      <div style={{padding: 24}}>
-          <h1>Цензор Excel таблиц!</h1>
-          <UploadFile setColumns={setColumns} setFileId={setFileId} onFileUpload={handleFileUpload}/>
-          {columns.length > 0 && (
-              <>
-                  <ColumnSelector
-                      columns={columns}
-                      selectedColumns={selectedColumns}
-                      setSelectedColumns={setSelectedColumns}
-                  />
-                  <CensorButton
-                      fileId={fileId}
-                      selectedColumns={selectedColumns}
-                      onSuccess={handleCensorSuccess}
-                  />
-              </>
-          )}
-          {columns.length === 0 && fileId && (
-              <>
-                <h2>Файл пустой!</h2>
-              </>
-          )}
-          {censoredFileId && (
-              <DownloadFileButton
-                  censoredFileId={censoredFileId}
-                  censoredFilename={censoredFilename}
-              />
-          )}
-      </div>
-  )
+    <div style={{ padding: 24 }}>
+      <h1>Цензор Excel таблиц!</h1>
+      <UploadFile setColumns={setColumns} setFileId={setFileId} onFileUpload={handleFileUpload} />
+      {columns.length > 0 && (
+        <>
+          <ColumnSelector
+            columns={columns}
+            selectedColumns={selectedColumns}
+            setSelectedColumns={setSelectedColumns}
+          />
+          <div className="button-container">
+            <CensorButton
+              fileId={fileId}
+              selectedColumns={selectedColumns}
+              onSuccess={handleCensorSuccess}
+            />
+          </div>
+        </>
+      )}
+      {columns.length === 0 && fileId && (
+        <h2>Файл пустой!</h2>
+      )}
+      {censoredFileId && (
+        <div className="button-container">
+          <DownloadFileButton
+            censoredFileId={censoredFileId}
+            censoredFilename={censoredFilename}
+          />
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

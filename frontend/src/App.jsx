@@ -50,7 +50,7 @@ function App() {
         </>
       )}
       {columns.length === 0 && fileId && (
-        <h2>Файл пустой!</h2>
+        <h2>Файл пустой или содержит в себе несколько листов!</h2>
       )}
       {censoredFileId && !hasError && (
         <div className="button-container">

@@ -29,8 +29,8 @@ function App() {
   };
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>Цензор Excel таблиц!</h1>
+    <div className="app-container">
+      <h1>Цензор Excel-таблиц!</h1>
       <UploadFile setColumns={setColumns} setFileId={setFileId} onFileUpload={handleFileUpload} />
       {columns.length > 0 && (
         <>

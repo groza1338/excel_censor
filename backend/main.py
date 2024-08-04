@@ -14,7 +14,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from work_with_excel.censor import read_excel_values, mask_columns, save_censored_file
 
-app = FastAPI()
+app = FastAPI(openapi_url="/api/openapi.json")
 
 # Разрешаем CORS
 app.add_middleware(
